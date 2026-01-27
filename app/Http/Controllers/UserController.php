@@ -231,4 +231,26 @@ class UserController extends Controller
         return view('user', ['users' => $searchTerm]);
     }
 
+    // For API to get all users
+    public function getAllUser(){
+        $users = SignUp::all();
+        return response()->json($users);
+    }
+
+    public function addStudent(Request $request){
+       $contactUs = new ContactUs();
+       $contactUs->name = $request->name;
+       $contactUs->email = $request->email;
+       $contactUs->phone = $request->phone;
+       $contactUs->subject = $request->subject;
+       $contactUs->message = $request->message;
+       if ($contactUs->save()) {
+           return response()->json(['message' => 'Student added successfully'], 200);
+       } else {
+           return response()->json(['message' => 'Failed to add student'], 500);
+       }
+    }
+
+   
+
 }
