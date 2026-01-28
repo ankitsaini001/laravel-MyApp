@@ -26,5 +26,14 @@ Route::get('/hello', function(){
 });
 
 // API route to get all users using UserController
-Route::get('/users',[UserController::class,'getAllUser']);
-Route::post('/add_Student',[UserController::class,'addStudent']);
+Route::post('/signUpApi',[UserController::class,'signUpApi']);
+Route::post('/loginUserApi',[UserController::class,'loginUserApi']);
+
+// Protected route example
+Route::group(['middleware' => 'auth:sanctum'], function(){
+    Route::get('/users',[UserController::class,'getAllUser']);
+    Route::post('/add_Student',[UserController::class,'addStudent']);
+    Route::put('/update_Student/{id}',[UserController::class,'updateStudent']);
+    Route::delete('/deleteStudent/{id}',[UserController::class, 'deleteStudent']);
+    Route::get('/searchStudent/{search?}',[UserController::class,'searchStudentApi']);
+});
